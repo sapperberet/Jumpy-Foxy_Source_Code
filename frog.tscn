@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://b785v4hmpgfd5"]
+
+[ext_resource type="Texture2D" uid="uid://bjy0gf2l1rhe2" path="res://assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-1.png" id="1_ig1ay"]
+[ext_resource type="Texture2D" uid="uid://bobxda4boigo7" path="res://assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-2.png" id="2_i8a7b"]
+[ext_resource type="Texture2D" uid="uid://5gam44i0wugb" path="res://assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-3.png" id="3_3rcpj"]
+[ext_resource type="Texture2D" uid="uid://bco3ymq6b5obw" path="res://assets/Sunny-land-files/Graphical Assets/sprites/frog/idle/frog-idle-4.png" id="4_w1ymn"]
+[ext_resource type="Texture2D" uid="uid://mpuidsrky17h" path="res://assets/Sunny-land-files/Graphical Assets/sprites/frog/jump/frog-jump-1.png" id="5_4wqjv"]
+[ext_resource type="Texture2D" uid="uid://w2oldfvp4deq" path="res://assets/Sunny-land-files/Graphical Assets/sprites/frog/jump/frog-jump-2.png" id="6_nscay"]
+[ext_resource type="Script" path="res://AnimatedSprite2D.gd" id="7_sbosv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nx74n"]
+size = Vector2(20, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aiyte"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ig1ay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_i8a7b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3rcpj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_w1ymn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_4wqjv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nscay")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sa7qq"]
+radius = 80.7775
+
+[node name="Frog" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_nx74n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_aiyte")
+animation = &"jump"
+script = ExtResource("7_sbosv")
+
+[node name="player detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player detection"]
+shape = SubResource("CircleShape2D_sa7qq")
+
+[connection signal="body_entered" from="player detection" to="AnimatedSprite2D" method="_on_player_detection_body_entered"]
